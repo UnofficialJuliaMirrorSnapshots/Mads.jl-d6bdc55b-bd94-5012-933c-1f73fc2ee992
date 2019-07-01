@@ -1,5 +1,8 @@
+import Pkg
+!haskey(Pkg.installed(), "OrderedCollections") && Pkg.add("OrderedCollections")
 import OrderedCollections
-using DelimitedFiles
+!haskey(Pkg.installed(), "DelimitedFiles") && Pkg.add("DelimitedFiles")
+import DelimitedFiles
 
 function madsmodelrun_internal_linearmodel_template(madsdata::AbstractDict) # mads data dictionary is as an argument if needed
 	# Replace with:
@@ -7,7 +10,7 @@ function madsmodelrun_internal_linearmodel_template(madsdata::AbstractDict) # ma
 	# - a parser of the model outputs
 	# - return a dictionary with model predictions
 	i = open("parameters.dat", "r")
-	param = readdlm(i)
+	param = DelimitedFiles.readdlm(i)
 	close(i)
 	a = param[1]
 	b = param[2]
