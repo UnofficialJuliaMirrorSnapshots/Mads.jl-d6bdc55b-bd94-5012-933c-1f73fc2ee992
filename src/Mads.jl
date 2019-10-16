@@ -1,7 +1,7 @@
 __precompile__()
 
 """
-MADS: Model Analysis & Decision Support in Julia (Mads.jl v1.0) 2016
+MADS: Model Analysis & Decision Support in Julia (Mads.jl v1.0) 2019
 
 http://mads.lanl.gov
 https://github.com/madsjulia
@@ -79,6 +79,7 @@ include("MadsHelpers.jl")
 "Try to import a module"
 macro tryimport(s::Symbol)
 	mname = string(s)
+	!haskey(Pkg.installed(), mname) && Pkg.add(mname)
 	importq = string(:(import $s))
 	infostring = string("Module ", s, " is not available")
 	q = quote
@@ -94,6 +95,7 @@ end
 
 macro tryimportmain(s::Symbol)
 	mname = string(s)
+	!haskey(Pkg.installed(), mname) && Pkg.add(mname)
 	importq = string(:(import $s))
 	infostring = string("Module ", s, " is not available")
 	warnstring = string("Module ", s, " cannot be imported")
@@ -179,9 +181,10 @@ if haskey(ENV, "MADS_NOT_QUIET")
 	global quiet = false
 end
 
+include("MadsHelp.jl")
+Mads.welcome()
 include("MadsCapture.jl")
 include("MadsLog.jl")
-include("MadsHelp.jl")
 include("MadsCreate.jl")
 include("MadsIO.jl")
 include("MadsYAML.jl")
@@ -212,13 +215,6 @@ if !haskey(ENV, "MADS_NO_BIGUQ")
 		include("MadsBayesInfoGap.jl")
 	else
 		ENV["MADS_NO_BIGUQ"] = ""
-	end
-end
-
-if !haskey(ENV, "MADS_NO_KLARA")
-	@tryimport Klara
-	if !isdefined(Mads, :Klara)
-		ENV["MADS_NO_KLARA"] = ""
 	end
 end
 
