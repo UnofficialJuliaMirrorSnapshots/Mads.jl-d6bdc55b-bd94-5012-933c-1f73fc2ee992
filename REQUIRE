@@ -15,12 +15,9 @@ PyCall 1.8
 PyPlot 2.2
 Gadfly 0.6.5
 Compose 0.5.2
-Cairo
-Fontconfig
 Colors
 Measures
 Images
-QuartzImageIO
 YAML
 JSON
 JLD2

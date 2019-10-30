@@ -1,6 +1,5 @@
 import Mads
 import Test
-import Compat
 import Printf
 
 if isdefined(Mads, :runcmd)
@@ -125,7 +124,7 @@ Mads.deletekeyword!(Dict("Problem"=>["ssdr","paranoid"]), "Problem", "ssdr")
 
 Mads.stdouterrcaptureoff();
 
-Mads.pkgversion("ModuleThatDoesNotExist") # this captures output
+# Mads.pkgversion_old("ModuleThatDoesNotExist") # this captures output
 
 Mads.quieton()
 if quiet_status
